@@ -1,12 +1,48 @@
 // Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Partials, Collection, Events, GatewayIntentBits,MessageFlags } = require('discord.js');
 const { token } = require('./config.json');
 //others
 const fs = require('node:fs');
 const path = require('node:path');
+const { ReactionRole } = require("discordjs-reaction-role");
+const process = require('process');
+//const env = process.env;
+
+process.env.MESSAGE='1377836402389160038';
+process.env.RE_RED=':goat:';
+process.env.RO_RED='1378167861956055040';
+
+
+//🔴🔵🟢🟠🟡🟣🟤
+//🩷❤️💙🤎💛💜💚🧡
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ partials: [Partials.Message, Partials.Reaction],intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,] });
+
+// Create a new manager and use it.
+const configuration = [
+  {
+    messageId: process.env.MESSAGE,
+    reaction: "🩷",
+    roleId: "1378167861956055040",
+  },
+  {
+    messageId: process.env.MESSAGE,
+    reaction: "💙",
+    roleId: "1378175973756764170",
+  },
+  {
+    messageId: process.env.MESSAGE,
+    reaction: "🐐",
+    roleId: process.env.RO_RED,
+  },
+  {
+    messageId: process.env.MESSAGE,
+    reaction: "🐐",
+    roleId: process.env.RO_RED,
+  },
+];
+//const manager = new ReactionRole(client, configuration);
 
 client.commands = new Collection();
 
@@ -38,7 +74,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		await command.execute(interaction,client);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

@@ -9,6 +9,7 @@
   "author": "Alfredo <alfredosoto3598@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.19.3"
+    "discord.js": "^14.19.3",
+    "discordjs-reaction-role": "^3.1.0"
   }
 }
