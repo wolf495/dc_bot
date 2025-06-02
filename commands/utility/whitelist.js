@@ -19,7 +19,7 @@ module.exports = {
 		
 		//fetch(https://mc-api.io/profile/wolf3598/java)
 		var toWhitelist = null;
-		fetch(`https://mc-api.io/profile/${inp}/java`)
+		/*fetch(`https://mc-api.io/profile/${inp}/java`)
 		  .then(response => {
 			if (!response.ok) {
 			  throw new Error('Network response was not ok');
@@ -38,7 +38,7 @@ module.exports = {
 			  toWhitelist = data.uuid;
 			  })
 		  .catch(error => console.error('There was a problem with the fetch operation:', error));
-		
+		*/
 		
 		//console.log(`WHITELIST=${toWhitelist}`)
 		if (inp !== null){

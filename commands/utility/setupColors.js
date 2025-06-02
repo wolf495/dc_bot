@@ -23,6 +23,8 @@ module.exports = {
 		response.react("💜");
 		response.react("💚");
 		response.react("🧡");
+		response.react("🖤");
+		response.react("🤍");
 		//console.log(response.id);
 		process.env.MESSAGE=response.id;
 		
