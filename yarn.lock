@@ -165,11 +165,6 @@ rcon-client@^4.2.5:
   dependencies:
     typed-emitter "^0.1.0"
 
-rcon@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/rcon/-/rcon-1.1.0.tgz"
-  integrity sha512-eotwcApOBjfadTjqQlrZVR4jzlwGCMNxmHhnFZx+g4kouwwRstRHkk1ON7DzkqrHNIjADSh0cU3gThSsDolUpg==
-
 ts-mixer@^6.0.4:
   version "6.0.4"
   resolved "https://registry.npmjs.org/ts-mixer/-/ts-mixer-6.0.4.tgz"

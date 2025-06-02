@@ -1,25 +1,14 @@
-// Require the necessary discord.js classes
 const { Client, Partials, Collection, Events, GatewayIntentBits,MessageFlags } = require('discord.js');
 const { token,colorMsg } = require('./config.json');
-//others
 const fs = require('node:fs');
 const path = require('node:path');
 const { ReactionRole } = require("discordjs-reaction-role");
 const process = require('process');
-//const env = process.env;
-
 process.env.MESSAGE=colorMsg;
-//process.env.RE_RED=':goat:';
-//process.env.RO_RED='1378167861956055040';
 
 
-//🔴🔵🟢🟠🟡🟣🟤
-//🩷❤️💙🤎💛💜💚🧡
-
-// Create a new client instance
 const client = new Client({ partials: [Partials.Message, Partials.Reaction],intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,] });
 
-// Create a new manager and use it.
 const configuration = [
 			{
 				messageId: process.env.MESSAGE,
@@ -61,6 +50,16 @@ const configuration = [
 				reaction: "🧡",
 				roleId: "1378191501334675466",
 			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🖤",
+				roleId: "1379147493010440203",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🤍",
+				roleId: "1379147653358682183",
+			},
 		];
 const manager = new ReactionRole(client, configuration);
 
@@ -75,7 +74,6 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
-		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
 		} else {
@@ -106,26 +104,8 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 
-
-
-// When the client is ready, run this code (only once).
-// The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
-// It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-// Log in to Discord with your client's token
 client.login(token);
-
-
-
-/*const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-client.commands = new Collection();
-*/

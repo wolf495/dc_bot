@@ -60,7 +60,16 @@ module.exports = {
 				outResponse = response;
 			}
 			
-			if (!outResponse.includes('already whitelisted')){
+
+			if (outResponse.includes('player does not exist')){
+				outResponse =  `'${inp}' ${outResponse}`;
+				interaction.reply({content: `${outResponse}`,flags: MessageFlags.Ephemeral});
+			}
+			else if (outResponse.includes('already whitelisted')) {
+				outResponse =  `'${inp}' ${outResponse}`;
+				interaction.reply({content: `${outResponse}`,flags: MessageFlags.Ephemeral});
+			}
+			else {
 				let responses = await Promise.all([
 				//rcon.send("help"),
 				//rcon.send(`whitelist add ${inp}`)
@@ -70,11 +79,10 @@ module.exports = {
 					//if(response.includes('already whitelisted')){}console.log(response)
 					outResponse += response;
 				}
+				interaction.reply({content: `${outResponse}`});
 			}
 			
 			//interaction.reply({content: `${outResponse}`,flags: MessageFlags.Ephemeral});
-			interaction.reply({content: `${outResponse}`});
-			
 			rcon.end()
 		}
 		//---------------

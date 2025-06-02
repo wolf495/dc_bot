@@ -10,16 +10,10 @@ const jsonData = require('../../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('setupcolors')
-		.setDescription('Replies with msg'),
-		//.addStringOption(option =>
-		//option.setName('input')
-		//	.setDescription('The input to say'))
-		//,
+		.setDescription('add message for reaction Roles'),
 	async execute(interaction,client) {
-		//await interaction.reply('Pong!');
 		await interaction.deferReply();
 		await interaction.deleteReply();
-		//const inp = interaction.options.getString('input')
 		const response = await interaction.channel.send({ content: `Use these reactions for role colors (only works if I'm online)`, withResponse: true  });
 		response.react("🩷");
 		response.react("❤️");
@@ -40,7 +34,8 @@ module.exports = {
 
 		//console.log('Data updated successfully.');
 		
-		//🩷❤️💙🤎💛💜💚🧡
+		//https://emojis.wiki/
+		//🩷❤️💙🤎💛💜💚🧡🖤🤍
 		const configuration = [
 			{
 				messageId: process.env.MESSAGE,
@@ -81,6 +76,16 @@ module.exports = {
 				messageId: process.env.MESSAGE,
 				reaction: "🧡",
 				roleId: "1378191501334675466",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🖤",
+				roleId: "1379147493010440203",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🤍",
+				roleId: "1379147653358682183",
 			},
 		];
 		const manager = new ReactionRole(client, configuration);
