@@ -38,12 +38,16 @@ module.exports = {
 	//.setFooter({ text: `This will self-destruct in [] minutes` })
 	;
 	//console.log(inp2);
+		
+	if (!inp2){
+		interaction.channel.send({ embeds: [exampleEmbed] }).then(msg => setTimeout(() => msg.delete(), (1000 * 10)));
+	}else{
 		if (inp2 == 0){
 			interaction.channel.send({ embeds: [exampleEmbed] });
 		} else {
 			interaction.channel.send({ embeds: [exampleEmbed] }).then(msg => setTimeout(() => msg.delete(), (1000 * inp2)));
 		}
-		
+	}
 		//interaction.channel.send({ content: spoiler(`${inp}`) }).then(msg => setTimeout(() => msg.delete(), 100000));
 		//.then(msg =>{msg.delete({timeout:"100000"})});
 	},
