@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const { Client, Partials, Collection, Events, GatewayIntentBits,MessageFlags } = require('discord.js');
-const { token } = require('./config.json');
+const { token,colorMsg } = require('./config.json');
 //others
 const fs = require('node:fs');
 const path = require('node:path');
@@ -8,9 +8,9 @@ const { ReactionRole } = require("discordjs-reaction-role");
 const process = require('process');
 //const env = process.env;
 
-process.env.MESSAGE='1377836402389160038';
-process.env.RE_RED=':goat:';
-process.env.RO_RED='1378167861956055040';
+process.env.MESSAGE=colorMsg;
+//process.env.RE_RED=':goat:';
+//process.env.RO_RED='1378167861956055040';
 
 
 //🔴🔵🟢🟠🟡🟣🟤
@@ -21,28 +21,48 @@ const client = new Client({ partials: [Partials.Message, Partials.Reaction],inte
 
 // Create a new manager and use it.
 const configuration = [
-  {
-    messageId: process.env.MESSAGE,
-    reaction: "🩷",
-    roleId: "1378167861956055040",
-  },
-  {
-    messageId: process.env.MESSAGE,
-    reaction: "💙",
-    roleId: "1378175973756764170",
-  },
-  {
-    messageId: process.env.MESSAGE,
-    reaction: "🐐",
-    roleId: process.env.RO_RED,
-  },
-  {
-    messageId: process.env.MESSAGE,
-    reaction: "🐐",
-    roleId: process.env.RO_RED,
-  },
-];
-//const manager = new ReactionRole(client, configuration);
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🩷",
+				roleId: "1378190916921196625",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "💙",
+				roleId: "1378191127689298062",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "❤️",
+				roleId: "1378191403032645703",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🤎",
+				roleId: "1378191199130746921",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "💛",
+				roleId: "1378191167317082112",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "💜",
+				roleId: "1378191673598804088",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "💚",
+				roleId: "1378191709044867073",
+			},
+			{
+				messageId: process.env.MESSAGE,
+				reaction: "🧡",
+				roleId: "1378191501334675466",
+			},
+		];
+const manager = new ReactionRole(client, configuration);
 
 client.commands = new Collection();
 

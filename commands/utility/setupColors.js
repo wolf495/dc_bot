@@ -2,7 +2,10 @@ const { SlashCommandBuilder } = require('discord.js');
 const process = require('process');
 const { Client, Partials, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { ReactionRole } = require("discordjs-reaction-role");
+const fs = require('fs');
 
+// Read the JSON file using require
+const jsonData = require('../../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,6 +31,15 @@ module.exports = {
 		response.react("🧡");
 		//console.log(response.id);
 		process.env.MESSAGE=response.id;
+		
+		// Update the data
+		jsonData.colorMsg = `${response.id}`;
+
+		// Synchronously write the updated data back to the JSON file
+		fs.writeFileSync('./config.json', JSON.stringify(jsonData, null, 2));
+
+		//console.log('Data updated successfully.');
+		
 		//🩷❤️💙🤎💛💜💚🧡
 		const configuration = [
 			{
