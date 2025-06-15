@@ -43,7 +43,7 @@ module.exports = {
 		//console.log(`WHITELIST=${toWhitelist}`)
 		if (inp !== null){
 			const rcon = await Rcon.connect({
-				host: "0.0.0.0", port: 35981, password: "soto495"
+				host: "10.0.0.248", port: 35981, password: "soto495"
 			})
 
 			//console.log(await rcon.send("list"))

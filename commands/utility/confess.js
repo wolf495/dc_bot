@@ -38,7 +38,13 @@ module.exports = {
 	//.setFooter({ text: `This will self-destruct in [] minutes` })
 	;
 	//console.log(inp2);
-		
+	
+	//console.log(interaction.member);
+	
+	if (interaction.member.roles.cache.has('1379252772595044432')){
+		interaction.channel.send({ content: 'quack' });
+	}else{
+	
 	if (!inp2){
 		interaction.channel.send({ embeds: [exampleEmbed] }).then(msg => setTimeout(() => msg.delete(), (1000 * 10)));
 	}else{
@@ -47,6 +53,7 @@ module.exports = {
 		} else {
 			interaction.channel.send({ embeds: [exampleEmbed] }).then(msg => setTimeout(() => msg.delete(), (1000 * inp2)));
 		}
+	}
 	}
 		//interaction.channel.send({ content: spoiler(`${inp}`) }).then(msg => setTimeout(() => msg.delete(), 100000));
 		//.then(msg =>{msg.delete({timeout:"100000"})});

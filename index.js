@@ -7,7 +7,8 @@ const process = require('process');
 process.env.MESSAGE=colorMsg;
 
 
-const client = new Client({ partials: [Partials.Message, Partials.Reaction],intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,] });
+const client = new Client({ partials: [Partials.Message, Partials.Reaction],
+intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,GatewayIntentBits.MessageContent,] });
 
 const configuration = [
 			{
@@ -101,6 +102,34 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
 		}
 	}
+});
+
+client.on('messageCreate', (message) => {
+    //console.log(`messageCreate: ${message}`);
+	if (!message.author.bot){
+		if (message.member.roles.cache.has('1379252772595044432')){ 
+	//console.log(`${message.author.username} is ducked.`);
+	//var cloned = message;
+	//message.delete();
+	//message.channel.send({ content: `test - role check hit`});
+	message.channel.createWebhook({
+	name: message.author.username,
+	avatar: message.author.displayAvatarURL(),
+}).then(webhook => {
+		//console.log(`Created webhook ${webhook}`);
+		//return webhook.send({
+	//content: message.content,
+	//username: message.author.username,
+	//avatarURL: message.author.displayAvatarURL(),
+	//})
+	//console.log(message);
+	return webhook.send('quack').then(message => webhook);
+	//return webhook
+	//webhook.delete();
+	}).then(webhook => webhook.delete()).catch(console.error);
+	message.delete();
+	}}
+	
 });
 
 
