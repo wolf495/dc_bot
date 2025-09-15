@@ -35,7 +35,7 @@ async def checkForNewDubbed():
             MemLastDubbedStr = file.read()
 
         if CurLastDubbedStr != MemLastDubbedStr:
-            command = ['node', '..\\python_announce.js',
+            command = ['node', '..\\crunchyroll_announce.js',
                     CurLastDubbedStr,LastDubEp.season_title.split(' Season ')[0],
                     LastDubEp.images.thumbnail[0].url,
                     f'https://www.crunchyroll.com/watch/{LastDubEp.id}/{LastDubEp.slug}']
