@@ -5,7 +5,7 @@ memory = "C:\\_DEV\\dc_bot\\python\\memory\\crunchyroll"
 
 client = crunpyroll.Client(
     email="MortyNewman94@hotmail.com",
-    password="nncBWpIy5",
+    password="soto495",
     locale="en-US"
 )
         

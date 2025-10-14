@@ -1,3 +1,3 @@
-cd C:\Archived\mancave\bots\dc_bot
+cd C:\_DEV\dc_bot
 node deploy-commands.js
 npm start
