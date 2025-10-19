@@ -17,7 +17,9 @@ client.on('ready', () => {
     if (channel) {
 	const exampleEmbed = new EmbedBuilder()
 		.setColor(0xF47521)
-		.setAuthor({ name: `🔥 NEW Dubbed Episode 🔥`})//, iconURL: 'https://logos-world.net/wp-content/uploads/2021/02/Crunchyroll-Symbol.png'})
+		.setTitle(`🔥 NEW Dubbed Episode 🔥`)
+		.setURL(`https://www.crunchyroll.com/discover`)
+		//.setAuthor({ name: `🔥 NEW Dubbed Episode 🔥`})//, iconURL: 'https://logos-world.net/wp-content/uploads/2021/02/Crunchyroll-Symbol.png'})
 		.setThumbnail('https://logos-world.net/wp-content/uploads/2021/02/Crunchyroll-Symbol.png')
 		.addFields({ name: `${process.argv[3]}`, value: `[${process.argv[2]}](${process.argv[5]})`})
 		.setImage(`${process.argv[4]}`);
