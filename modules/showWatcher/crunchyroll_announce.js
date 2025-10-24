@@ -1,8 +1,11 @@
-const { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } = require('discord.js');
-const { token,announceMsg } = require('./config.json');
-const path = require('node:path');
-const process = require('process');
-
+//const { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } = require('discord.js');
+//const { token,announceMsg } = require('../../config.json');
+//const path = require('node:path');
+//const process = require('process');
+import { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } from 'discord.js';
+import config from '../../config.json' with { type: "json" };
+import path from 'node:path';
+import process from 'process'
 
 const client = new Client({ partials: [Partials.Message, Partials.Reaction],
 intents: [GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMessageReactions,GatewayIntentBits.MessageContent,] });
@@ -12,7 +15,7 @@ client.once(Events.ClientReady, readyClient => {
 });
 
 client.on('ready', () => {
-    const channel = client.channels.cache.get(announceMsg);
+    const channel = client.channels.cache.get(config.announceMsg);
 
     if (channel) {
 	const exampleEmbed = new EmbedBuilder()
@@ -30,5 +33,5 @@ client.on('ready', () => {
 	client.destroy();
 });
 
-client.login(token);
+client.login(config.token);
 

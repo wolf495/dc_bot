@@ -1,12 +1,17 @@
-const { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } = require('discord.js');
-const { token,announceMsg } = require('./config.json');
-const path = require('node:path');
-const process = require('process');
-const { link } = require('node:fs');
+//const { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } = require('discord.js');
+//const { token,announceMsg } = require('../../config.json');
+//const path = require('node:path');
+//const process = require('process');
+//const { link } = require('node:fs');
 
+import { Client, Partials, Events, GatewayIntentBits,MessageFlags,EmbedBuilder } from 'discord.js';
+import config from '../../config.json' with { type: "json" };
+import path from 'node:path';
+import process from 'process';
+//import { link } from 'node:fs';
 
 function isToday(date) {
-  today = new Date();
+  let today = new Date();
   //const today = new Date("10/07/2025");
   //console.log(`${date.getFullYear()} === ${today.getFullYear()}`)
   //console.log(`${date.getMonth()} === ${today.getMonth()}`)
@@ -23,7 +28,7 @@ function parseDateRange(str) {
   str = str.replace(/(\d+)(st|nd|rd|th)/gi, '$1').replace(/\s*–\s*/g, '-');
 
   // Split into start and end parts
-  [startStr, endStr] = str.split('-').map(s => s.trim());
+  let [startStr, endStr] = str.split('-');
 
   //console.log(`${startStr} AND ${endStr}`)
 
@@ -124,12 +129,12 @@ const eventsLinks = [];
 
   const combined = matches.map((_, i) => [matches[i], matches2[i]]);
   //console.log(matches4);
-  newCombined = []
+  //newCombined = []
   for (const event of combined) {
-    eventName=event[0]
-    eventDateRange=event[1]
+    let eventName=event[0]
+    let eventDateRange=event[1]
     eventDateRange.replace(/event runs through /gi, "");
-    parsed = parseDateRange(eventDateRange);
+    let parsed = parseDateRange(eventDateRange);
     //console.log(`Event: ${eventName} [${parsed.startDate.toLocaleDateString()} - ${parsed.endDate.toLocaleDateString()}]`)
     if(isToday(parsed.startDate)){
         eventsToAnnounce.push([eventName,parsed.startDate.toLocaleDateString(),parsed.endDate.toLocaleDateString()])
@@ -156,7 +161,7 @@ client.once(Events.ClientReady, readyClient => {
 });
 
 client.on('ready', () => {
-    const channel = client.channels.cache.get(announceMsg);
+    const channel = client.channels.cache.get(config.announceMsg);
     //console.log(eventsToAnnounce);
     if (channel) {
       for (eventItem in eventsToAnnounce){
@@ -205,5 +210,5 @@ client.on('ready', () => {
 	client.destroy();
 });
 
-client.login(token);
+client.login(config.token);
 
