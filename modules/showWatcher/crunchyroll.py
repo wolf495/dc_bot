@@ -37,7 +37,7 @@ async def checkForNewDubbed():
             subprocess.run(command, capture_output=True, text=True)
             #print(test)
             updateTrackedShow = trackedShow
-            updateTrackedShow['series'] = LastDubEp.season_title.split(' Season ')[0]
+            updateTrackedShow['series'] = LastDubEp.series_slug.replace("-"," ")
             updateTrackedShow['season'] = LastDubEp.season_number
             updateTrackedShow['episode'] = LastDubEp.episode_number
             updateTrackedShow['title'] = LastDubEp.title
@@ -46,31 +46,39 @@ async def checkForNewDubbed():
             #break 
         else:
             print('caught up')
-    '''
-    trackedShows = os.listdir(memory)
-    for show in trackedShows:
-        queryStr = os.path.splitext(show)[0]
-        LastDubEp = await queryLastDubbedEp(queryStr)
-        CurLastDubbedStr = f'S{LastDubEp.season_number}E{LastDubEp.episode_number}:{LastDubEp.title}'
-        MemLastDubbedStr = None
-        with open(f'{memory}\\{show}', 'r') as file:
-            MemLastDubbedStr = file.read()
 
-        if CurLastDubbedStr != MemLastDubbedStr:
-            command = ['node', '..\\crunchyroll_announce.js',
-                    CurLastDubbedStr,LastDubEp.season_title.split(' Season ')[0],
-                    LastDubEp.images.thumbnail[0].url,
-                    f'https://www.crunchyroll.com/watch/{LastDubEp.id}/{LastDubEp.slug}']
-            #result = subprocess.run(command, capture_output=True, text=True)
-            #with open(f'{memory}\\{show}', 'w') as file:
-            #    file.write(CurLastDubbedStr)
-            '''
 
 async def addNewShow(newShow):
+    alreadyTracked = False
     LastDubEp = await queryLastDubbedEp(newShow)
+    #print (LastDubEp)
     if LastDubEp:
-        with open(f'{memory}\\{newShow}.txt', 'w') as file:
-            file.write(f'S{LastDubEp.season_number}E{LastDubEp.episode_number}:{LastDubEp.title}')
+        queryTrackedShows = subprocess.run(['node', 'crunchyroll.js','check'], capture_output=True, text=True)
+        trackedShows = json.loads(queryTrackedShows.stdout)
+        for trackedShow in trackedShows['docs']:
+            if LastDubEp.series_slug.replace("-"," ") == trackedShow['series'] or LastDubEp.season_title.split(' Season ')[0] == trackedShow['series']:
+                alreadyTracked = True
+                break
+        #print(LastDubEp)
+        
+        #test = subprocess.run(['node', 'crunchyroll.js','add', json.dumps(newShow)], capture_output=True, text=True)
+        #with open(f'{memory}\\{newShow}.txt', 'w') as file:
+        #    file.write(f'S{LastDubEp.season_number}E{LastDubEp.episode_number}:{LastDubEp.title}')
+        #pdbInsert({subsystem: 'bot' ,type: 'roleconfig',config: configuration})
+        #print(newShow)
+        if not alreadyTracked:
+            newShow = {
+                'subsystem':'anime',
+                'series': LastDubEp.series_slug.replace("-"," "),
+                'season': LastDubEp.season_number,
+                'episode': LastDubEp.episode_number,
+                'title': LastDubEp.title
+            }
+            #print(newShow)
+            #print('CALL ADD js')
+            test = subprocess.run(['node', 'crunchyroll.js','add', json.dumps(newShow)], capture_output=True, text=True)
+        else:
+            print("already tracked")
     else:
         return False
     return True

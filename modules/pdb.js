@@ -64,3 +64,17 @@ try {
 }
 }
 
+export async function pdbDeleteItem(ItemId,ItemRev) {
+try {
+  let pdb = await pdbInit()
+  let result = null
+  if (ItemId){
+    console.log(`attempt to remove ${ItemId}`)
+    result = await pdb.remove(ItemId,ItemRev);
+  }
+  
+  return result;
+} catch (err) {
+  console.log(err);
+}
+}

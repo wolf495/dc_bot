@@ -19,8 +19,17 @@ async function updateFunc(){
     const response = await pdbUpdate(newDub)
 }
 
+async function insertFunc(){
+    console.log('insert something')
+    console.log(process.argv[3])
+    let newDub = JSON.parse(process.argv[3])
+    const response = await pdbInsert(newDub)
+}
+
 if (process.argv[2].toLowerCase() == 'check'){
     mainfunc()
 } else if(process.argv[2].toLowerCase() == 'update') {
     updateFunc()
+} else if(process.argv[2].toLowerCase() == 'add') {
+    insertFunc()
 }
