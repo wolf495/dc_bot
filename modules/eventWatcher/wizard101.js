@@ -10,6 +10,34 @@ import path from 'node:path';
 import process from 'process';
 //import { link } from 'node:fs';
 
+// Import the http module
+import https from 'https';
+let out = null
+
+const fetchData = () => {
+    return new Promise((resolve, reject) => {
+        https.get('https://www.wizard101.com/game/monthly-events-calendar', (res) => {
+            let data = '';
+
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            res.on('end', () => {
+                resolve(data); // Resolve the Promise with parsed data
+            });
+        }).on('error', (err) => {
+            reject('Error: ' + err.message); // Reject the Promise on error
+        });
+    });
+};
+
+
+
+
+
+
+
 function isToday(date) {
   let today = new Date();
   //const today = new Date("10/07/2025");
@@ -73,13 +101,30 @@ function parseDateRange(str) {
 
 
 
-const eventsToAnnounce = [];
-const eventsImages = [];
-const eventsLinks = [];
+let eventsToAnnounce = [];
+let eventsImages = [];
+let eventsLinks = [];
 
 (async () => {
+
+  await https.get('https://www.wizard101.com/game/monthly-events-calendar', (res) => {
+    let data = '';
+    res.on('data', (chunk) => {
+        data += chunk;
+    });
+    res.on('end', () => {
+        out = data
+        //console.log(out)
+    });
+}).on('error', (err) => {
+    console.error('Error: ', err.message);
+});
+
+  const globalData = await fetchData();
+  //console.log(globalData)
+  //html = 
   const res = await fetch("https://www.wizard101.com/game/monthly-events-calendar");
-  const html = await res.text();
+  const html = globalData//await res.text();
 
   // Match everything between <strong>...</strong>
   const regex = /<strong>(.*?)<\/strong>/gi;
@@ -128,15 +173,20 @@ const eventsLinks = [];
   }
 
   const combined = matches.map((_, i) => [matches[i], matches2[i]]);
-  //console.log(matches4);
+  //console.log(res);
+  console.log(matches);
+  console.log(matches2);
+  console.log(matches3);
+  console.log(matches4);
   //newCombined = []
   for (const event of combined) {
     let eventName=event[0]
     let eventDateRange=event[1]
     eventDateRange.replace(/event runs through /gi, "");
     let parsed = parseDateRange(eventDateRange);
-    //console.log(`Event: ${eventName} [${parsed.startDate.toLocaleDateString()} - ${parsed.endDate.toLocaleDateString()}]`)
+    console.log(`Event: ${eventName} [${parsed.startDate.toLocaleDateString()} - ${parsed.endDate.toLocaleDateString()}]`)
     if(isToday(parsed.startDate)){
+        //console.log('ISTODAY')
         eventsToAnnounce.push([eventName,parsed.startDate.toLocaleDateString(),parsed.endDate.toLocaleDateString()])
         //console.log(`Event: ${eventName} [${parsed.startDate.toLocaleDateString()} - ${parsed.endDate.toLocaleDateString()}]`)
     }
@@ -164,22 +214,22 @@ client.on('ready', () => {
     const channel = client.channels.cache.get(config.announceMsg);
     //console.log(eventsToAnnounce);
     if (channel) {
-      for (eventItem in eventsToAnnounce){
+      for (let eventItem in eventsToAnnounce){
          //console.log()
         //console.log(`EVENTITEM TO ANNOUCNE = ${eventsToAnnounce[eventItem][0]}`)
-        thisEventLink = ''
-        thisEventImage = ''
-        searchwordlink = eventsToAnnounce[eventItem][0].replace(' ','-')
-        searchwordImage = eventsToAnnounce[eventItem][0].replace(' ','')
+        let thisEventLink = ''
+        let thisEventImage = ''
+        let searchwordlink = eventsToAnnounce[eventItem][0].replace(' ','-')
+        let searchwordImage = eventsToAnnounce[eventItem][0].replace(' ','')
         eventsImages.forEach(linkItem => { 
-           regex1 = new RegExp(searchwordImage);
+           let regex1 = new RegExp(searchwordImage);
           if (regex1.test(linkItem)){ thisEventImage = linkItem } });
         eventsLinks.forEach(linkItem => { 
           //console.log(`searchlink=${searchwordlink}`)
-           regex1 = new RegExp(searchwordlink,'i');
+           let regex1 = new RegExp(searchwordlink,'i');
           if (regex1.test(linkItem)){ thisEventLink = linkItem } });
-        console.log(thisEventImage)
-        console.log(thisEventLink)
+        //console.log(thisEventImage)
+        //console.log(thisEventLink)
     const exampleEmbed = new EmbedBuilder()
 		.setColor(0x800080)
 		.setTitle(`🪄 Wizard101 Event 🪄`)

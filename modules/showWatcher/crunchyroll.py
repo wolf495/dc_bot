@@ -1,4 +1,4 @@
-import os,sys,subprocess,asyncio,crunpyroll,json
+import os,sys,subprocess,asyncio,crunpyroll,json # pyright: ignore[reportMissingImports]
 
 file = open("../../secure_config/configCrunchyPass", "r")
 crunchyEmail,crunchyPass = file.read().split(':')

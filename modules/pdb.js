@@ -78,3 +78,17 @@ try {
   console.log(err);
 }
 }
+
+export async function pdbTest() {
+ let pdb = await pdbInit()
+  try {
+    await pdb.post({
+    title: 'test'
+  });
+    return true
+  } catch (err) {
+    console.log(err);
+    return false
+  }
+
+}
