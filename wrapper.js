@@ -1,6 +1,6 @@
-import process from 'process';
+import process, { argv } from 'process';
 import { spawn } from 'child_process';
-import { pdbUpdate,pdbGetAll,pdbInsert,pdbDeleteItem,pdbTest } from "./modules/pdb.js";
+import { pdbUpdate,pdbGetAll,pdbInsert,pdbDeleteItem,pdbTest,pdbUpdate2 } from "./modules/pdb.js";
 
 process.removeAllListeners('warning');
 const rootDir = process.cwd()
@@ -116,18 +116,57 @@ async function helperWizard101(mode){
 async function helperPdb(mode){
     tab();log('~ Pdb:Start ~')
     process.chdir(wizDir)
+     //var all = null
     if (mode === 'check'){
-        let all = await pdbGetAll()
-        for (const item in all){
-            console.log(all[item])
+        //console.log(process.argv.length)
+        if (process.argv.length>=5){
+            //console.log(Array.from(process.argv[4]))
+
+            var all = await pdbGetAll(process.argv[4])
+            for (var item in all.docs){
+            //for(var item2 in all.docs[item]){
+                console.log(all.docs[item])
+                //if (item2 == 'doc'){
+                    //all.rows[item]['doc']['announced']=true
+                    //all.rows[item]['doc']['subsystem']='anime'
+                  //  console.log(all.rows[item]['doc'])
+                    //await pdbUpdate2(all.rows[item]['doc'])
+
+                //}
+            //}
+            //console.log('THING=',all.rows[item])
             
         }
+        }else{
+            var all = await pdbGetAll()
+            for (var item in all.rows){
+            for(var item2 in all.rows[item]){
+                //console.log(item2)
+                if (item2 == 'doc'){
+                    //all.rows[item]['doc']['announced']=true
+                    //all.rows[item]['doc']['subsystem']='anime'
+                    console.log(all.rows[item]['doc'])
+                    //await pdbUpdate2(all.rows[item]['doc'])
+
+                }
+            }
+            //console.log('THING=',all.rows[item])
+            
+            }
+        }
+        //await wait(1000)
+        //console.log(all)
+        
         //console.log(JSON.stringify(all))
     }else if (mode === 'delete'){
         let all = await pdbDeleteItem(process.argv[4],process.argv[5])
         console.log(all)
         //console.log(JSON.stringify(all))
     }else if (mode === 'test'){
+        let all = await pdbTest()
+        console.log(all)
+        //console.log(JSON.stringify(all))
+    }else if (mode === 'update'){
         let all = await pdbTest()
         console.log(all)
         //console.log(JSON.stringify(all))

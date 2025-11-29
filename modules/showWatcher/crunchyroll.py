@@ -21,7 +21,7 @@ async def queryLastDubbedEp(queryString):
 
 async def checkForNewDubbed():
     queryTrackedShows = subprocess.run(['node', 'crunchyroll.js','check'], capture_output=True, text=True)
-    #print(queryTrackedShows.stdout)
+    print(queryTrackedShows.stdout)
     trackedShows = json.loads(queryTrackedShows.stdout)
     #print(info['docs'])
     for trackedShow in trackedShows['docs']:

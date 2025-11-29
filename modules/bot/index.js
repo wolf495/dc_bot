@@ -2,7 +2,7 @@ import { Client, Partials, Collection, Events, GatewayIntentBits,MessageFlags,Em
 import config from '../../config.json' with { type: "json" };
 import getCommands from './util/commandsHelper.js';
 import { ReactionRole } from "discordjs-reaction-role";
-import { pdbGetAll,pdbInsert,pdbDeleteItem } from "../pdb.js";
+import { pdbGetAll,pdbInsert } from "../pdb.js";
 
 const client = new Client({ 
 	partials: [Partials.Message,
@@ -143,9 +143,9 @@ client.once(Events.ClientReady, async readyClient => {
   //console.log("⏳ Waiting 20 seconds...");
   wait(20000).then(() => {
     pdbInsert({subsystem: 'bot' ,type: 'roleconfig',config: configuration})
-    console.log("✅ 20 seconds passed!");
-    client.destroy();
-    console.log('Bot shut down.');
+    //console.log("✅ 20 seconds passed!");
+    //client.destroy();
+    //console.log('Bot shut down.');
   });
 }
 
