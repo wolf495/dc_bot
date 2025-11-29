@@ -2,7 +2,17 @@ import process, { argv } from 'process';
 import { spawn } from 'child_process';
 import { pdbUpdate,pdbGetAll,pdbInsert,pdbDeleteItem,pdbTest,pdbUpdate2 } from "./modules/pdb.js";
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { chdir } from 'process';
+
 process.removeAllListeners('warning');
+// Get the current module's directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Change the working directory
+chdir(__dirname);
 const rootDir = process.cwd()
 const botDir = rootDir+'\\modules\\bot'
 const cruDir = rootDir+'\\modules\\showWatcher' 
@@ -180,6 +190,7 @@ if (process.argv.length<4){
     log('bad exit. not enough args')
     process.exit(1);
 }
+
 if (process.argv[2].toLowerCase() == 'bot'){
     await helperBot(process.argv[3].toLowerCase())
 } else if(process.argv[2].toLowerCase() == 'crunchyroll') {

@@ -4,8 +4,21 @@ import fs from 'fs';
 import PouchDBFind from 'pouchdb-find';
 PouchDB.plugin(PouchDBFind);
 //PouchDB.plugin(comdb);
-const pdbPath = 'C:/_DEV/dc_bot/localDB/my_databasetest';
-const pdbPass = fs.readFileSync('C:/_DEV/dc_bot/secure_config/configDbPass', 'utf8');
+//process.chdir(__dirname);
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { chdir } from 'process';
+
+// Get the current module's directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Change the working directory
+chdir(__dirname);
+
+const pdbPath = '../localDB/my_databasetest';
+//const pdbPath = 'C:/_DEV/dc_bot/localDB/my_databasetest';
+//const pdbPass = fs.readFileSync('../secure_config/configDbPass', 'utf8');
 //let pdb = null;
 
 export async function pdbInit(){
