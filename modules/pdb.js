@@ -1,27 +1,23 @@
 import PouchDB from 'pouchdb';
 import fs from 'fs';
-//import comdb from 'comdb';
 import PouchDBFind from 'pouchdb-find';
 PouchDB.plugin(PouchDBFind);
-//PouchDB.plugin(comdb);
-//process.chdir(__dirname);
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { chdir } from 'process';
 
-// Get the current module's directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Change the working directory
-chdir(__dirname);
+
+
 
 const pdbPath = '../localDB/my_databasetest';
-//const pdbPath = 'C:/_DEV/dc_bot/localDB/my_databasetest';
-//const pdbPass = fs.readFileSync('../secure_config/configDbPass', 'utf8');
-//let pdb = null;
+//console.log(`PDB.js_DIR=${process.cwd()}\nPDB.js_PATH=${pdbPath}`)
 
 export async function pdbInit(){
+  chdir(__dirname);
   let pdb = new PouchDB(pdbPath);
   //await pdb.setPassword(pdbPass);
   return pdb;
@@ -73,16 +69,18 @@ try {
   let pdb = await pdbInit()
   let result = null
   if (iSubsystem){
+    //console.log(`PDB: check subsystem ${iSubsystem}\n${process.cwd()}`)
     result = await pdb.find({
       selector: {'subsystem': iSubsystem}
     });
+    //console.log(result)
   } else{
     result = await pdb.allDocs({
       include_docs: true,
       attachments: false
     });
   }
-  await pdb.close()
+  //await pdb.close()
   return result;
 } catch (err) {
   console.log(err);
@@ -115,5 +113,20 @@ export async function pdbTest() {
     console.log(err);
     return false
   }
+
+}
+
+export async function pdbExport(){
+  let pdb = await pdbInit()
+  pdb.allDocs({ include_docs: true }).then(function (result) {
+      const json = JSON.stringify(result.rows.map(row => row.doc));
+      // Save json to a file
+      //downloadJSON(docs, 'my_database_export.json');
+      fs.writeFile('data.json', json, (err) => {
+          if (err) throw err;
+          console.log('File has been saved!');
+      });
+    });
+  return 0;
 
 }
