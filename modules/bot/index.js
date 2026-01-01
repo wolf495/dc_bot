@@ -2,7 +2,7 @@ import { Client, Partials, Collection, Events, GatewayIntentBits,MessageFlags,Em
 import config from '../../config.json' with { type: "json" };
 import getCommands from './util/commandsHelper.js';
 import { ReactionRole } from "discordjs-reaction-role";
-import { pdbGetAll,pdbInsert } from "../pdb.js";
+import { pdbGetAll,pdbInsert } from "./database/pdb.js";
 
 const client = new Client({ 
 	partials: [Partials.Message,

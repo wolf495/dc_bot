@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 // Change the working directory
 
-import { pdbUpdate,pdbGetAll,pdbInsert,pdbDeleteItem,pdbTest,pdbUpdate2,pdbExport } from "./modules/pdb.js";
+//import { pdbUpdate,pdbGetAll,pdbInsert,pdbDeleteItem,pdbTest,pdbUpdate2,pdbExport } from "./modules/pdb.js";
 chdir(__dirname);
 
 process.removeAllListeners('warning');
@@ -68,13 +68,24 @@ async function helperBot(mode){
     log('~ Bot:End ~');untab()
 }
 
-async function helperCrunchyroll(mode){
+async function helperCrunchyroll(){
     tab();log('~ Crunchyroll:Start ~')
     process.chdir(cruDir)
+    let exec = await runCommand('node',process.argv.slice(2));
+    log(exec)
+    /*
+    let mode = process.argv[3].toLowerCase()
+    let arg = process.argv[4].toLowerCase()
+    process.chdir(cruDir)
+    console.log(process.argv)
     if (mode === 'check'){
-        let exec = await runCommand('python',['crunchyroll.py','check']);
+        let exec = await runCommand('node',['crunchyroll.js','check']);
+        log(exec)
+    } else if (mode === 'add'){
+        let exec = await runCommand('node',['crunchyroll.js','add']);
         log(exec)
     }
+    */
     log('~ Crunchyroll:End ~');untab()
 }
 
@@ -87,7 +98,7 @@ async function helperWizard101(mode){
     }
     log('~ wizard101:End ~');untab()
 }
-
+/*
 async function helperPdb(mode){
     tab();log('~ Pdb:Start ~')
     //process.chdir(wizDir)
@@ -129,7 +140,7 @@ async function helperPdb(mode){
     }
     log('~ Pdb:End ~');untab()
 }
-
+*/
 (async()=>{
 log('~~ wrapper:Start ~~')
 if (process.argv.length<4){
@@ -140,11 +151,11 @@ if (process.argv.length<4){
 if (process.argv[2].toLowerCase() == 'bot'){
     await helperBot(process.argv[3].toLowerCase())
 } else if(process.argv[2].toLowerCase() == 'crunchyroll') {
-    await helperCrunchyroll(process.argv[3].toLowerCase())
+    await helperCrunchyroll()
 } else if(process.argv[2].toLowerCase() == 'wizard101') {
     await helperWizard101(process.argv[3].toLowerCase())
 }else if(process.argv[2].toLowerCase() == 'pdb') {
-    await helperPdb(process.argv[3].toLowerCase())
+    //await helperPdb(process.argv[3].toLowerCase())
 }
 
 log('~~ wrapper:End ~~')
